@@ -25,12 +25,14 @@ public class Authorizer {
     }
 
     public String authorize(String id) {
-        String key = UUID.randomUUID().toString();
-        if (userService.findUserById(id) == null) return null;
-        tokenMap.put(key, id);
-        if (tokenMap.get(key).equals(id))
-            return key;
-        else
+        if (!tokenMap.containsValue(id)) {
+            String key = UUID.randomUUID().toString();
+            if (userService.findUserById(id) == null) return null;
+            tokenMap.put(key, id);
+            if (tokenMap.get(key).equals(id))
+                return key;
             return null;
+        } else
+            return "User " + id + " is already authorized";
     }
 }
