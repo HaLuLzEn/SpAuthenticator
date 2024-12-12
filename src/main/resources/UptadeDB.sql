@@ -9,7 +9,8 @@ CREATE TABLE IF NOT EXISTS users (
     id VARCHAR(255) NOT NULL,
     email VARCHAR(255) NOT NULL,
     username VARCHAR(255) NOT NULL,
+    password VARCHAR(255),
     CONSTRAINT PRIMARY KEY pk_user_id USING BTREE (id)
 );
 
-INSERT INTO users (id, email, username) VALUES ('test', 'test', 'Basement man');
+INSERT INTO users (id, email, username, password) VALUES ('test', 'test', 'Basement man', 'test');

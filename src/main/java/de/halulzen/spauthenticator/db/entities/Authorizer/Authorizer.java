@@ -1,9 +1,11 @@
 package de.halulzen.spauthenticator.db.entities.Authorizer;
 
+import de.halulzen.spauthenticator.db.entities.User.User;
 import de.halulzen.spauthenticator.db.entities.User.UserService;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -34,5 +36,16 @@ public class Authorizer {
             return null;
         } else
             return "User " + id + " is already authorized";
+    }
+
+    public User login(String username, String password) {
+        List<User> users = userService.findAllUsers();
+        User found = null;
+        for (User u: users) {
+            if (u.getUsername().equals(username) && u.getPassword().equals(password)) {
+                found = u;
+            }
+        }
+        return found;
     }
 }
