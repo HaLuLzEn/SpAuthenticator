@@ -1,5 +1,6 @@
 package de.halulzen.spauthenticator.db.entities.Authorizer;
 
+import de.halulzen.spauthenticator.db.entities.Authorizer.authData.LoginResponseDTO;
 import de.halulzen.spauthenticator.db.entities.User.User;
 import de.halulzen.spauthenticator.db.entities.User.UserService;
 import org.springframework.stereotype.Service;
@@ -38,14 +39,24 @@ public class Authorizer {
             return "User " + id + " is already authorized";
     }
 
-    public User login(String username, String password) {
+    public LoginResponseDTO login(String username, String password) {
         List<User> users = userService.findAllUsers();
         User found = null;
+        boolean passwordCorrect = false;
+
         for (User u: users) {
-            if (u.getUsername().equals(username) && u.getPassword().equals(password)) {
+            if (u.getUsername().equals(username)) {
                 found = u;
+                if (u.getPassword().equals(password)) {
+                    passwordCorrect = true;
+                    break;
+                }
             }
         }
-        return found;
+        if (found != null) {
+            return new LoginResponseDTO(found.getId(), passwordCorrect);
+        } else {
+            return new LoginResponseDTO(null, passwordCorrect);
+        }
     }
 }

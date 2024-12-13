@@ -2,13 +2,12 @@ package de.halulzen.spauthenticator.db.rest;
 
 import de.halulzen.spauthenticator.db.entities.Authorizer.Authorizer;
 import de.halulzen.spauthenticator.db.entities.Authorizer.authData.LoginRequestDTO;
-import de.halulzen.spauthenticator.db.entities.User.User;
+import de.halulzen.spauthenticator.db.entities.Authorizer.authData.LoginResponseDTO;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/auth")
 public class AuthRestController {
-
     private final Authorizer authorizer;
 
     public AuthRestController(Authorizer authorizer){
@@ -31,7 +30,7 @@ public class AuthRestController {
     }
 
     @PostMapping("/users/login")
-    public User login(@RequestBody LoginRequestDTO loginRequestDTO) {
+    public LoginResponseDTO login(@RequestBody LoginRequestDTO loginRequestDTO) {
         return authorizer.login(loginRequestDTO.getUsername(), loginRequestDTO.getPassword());
     }
 }
